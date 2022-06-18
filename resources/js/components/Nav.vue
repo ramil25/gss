@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid p-0">
-        <div class="row" v-if="!isLoginTrigger">
+        <div class="row">
             <div class="col-md-12">
                 <nav
                     class="navbar fixed-top navbar-expand-lg navbar-light bg-warning"
@@ -24,16 +24,18 @@
                     >
                         <ul class="navbar-nav navbar-right">
                             <li class="nav-item mr-sm-2">
-                                <a class="nav-link" href="#"
+                                <router-link to="/" class="nav-link"
                                     >Home
-                                    <span class="sr-only">(current)</span></a
+                                    <span class="sr-only"
+                                        >(current)</span
+                                    ></router-link
                                 >
                             </li>
                             <li class="nav-item mr-sm-2 navbar-right">
-                                <a class="nav-link" href="#program">Programs</a>
+                                <a class="nav-link" href="#about">Programs</a>
                             </li>
                             <li class="nav-item mr-sm-2 navbar-right">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link" href="#about">About</a>
                             </li>
                             <li class="nav-item mr-sm-2 navbar-right">
                                 <a class="nav-link" href="#">Contacts</a>
@@ -44,11 +46,8 @@
                         <div class="ml-auto">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a
-                                        class="nav-link"
-                                        href="#login"
-                                        @click="loginClicked"
-                                        >Login</a
+                                    <router-link to="/login" class="nav-link"
+                                        >Login</router-link
                                     >
                                 </li>
                             </ul>
@@ -57,36 +56,15 @@
                 </nav>
             </div>
         </div>
-        <div v-if="isLoginTrigger"><Login></Login></div>
     </div>
 </template>
 
 <script>
-import Login from "../components/Login.vue";
 export default {
     mounted() {
         console.log("Component mounted.");
     },
-    components: { Login },
-    data() {
-        return {
-            isLoginTrigger: false,
-        };
-    },
-    methods: {
-        loginClicked() {
-            this.isLoginTrigger = true;
-        },
-    },
 };
 </script>
 
-<style>
-.container-fluid {
-    overflow-x: hidden;
-}
-.col-md-12 {
-    padding-left: 0;
-    padding-right: 0;
-}
-</style>
+<style></style>

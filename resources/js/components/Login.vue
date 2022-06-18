@@ -68,7 +68,10 @@
                                     >Show password</label
                                 >
                             </div>
-                            <a href="">Back to home</a>
+                            <router-link to="/" class="home-link"
+                                >Back to home</router-link
+                            >
+
                             <button type="submit" class="btn">Login</button>
                         </form>
                     </div>
@@ -103,6 +106,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    overflow-x: hidden;
 }
 
 img {
@@ -115,7 +119,7 @@ img {
     height: 100px;
 }
 
-a {
+.home-link {
     margin-top: 17px;
     float: left;
     color: #7e5a29;
