@@ -15,6 +15,10 @@ class CreateCounselingResultsTable extends Migration
     {
         Schema::create('counseling_results', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->references('id')->on('students');
+            $table->text('description')->nullable();
+            $table->longText('remarks')->nullable();
+            $table->integer('encoded_by')->unsigned();
             $table->timestamps();
         });
     }

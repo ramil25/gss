@@ -15,6 +15,10 @@ class CreateTestResultsTable extends Migration
     {
         Schema::create('test_results', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->references('id')->on('students');
+            $table->string('test_type', 100);
+            $table->double('test_result', 100, 2);
+            $table->integer('encoded_by')->unsigned();
             $table->timestamps();
         });
     }

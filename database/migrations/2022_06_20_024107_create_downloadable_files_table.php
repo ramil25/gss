@@ -15,6 +15,10 @@ class CreateDownloadableFilesTable extends Migration
     {
         Schema::create('downloadable_files', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->references('id')->on('students');
+            $table->enum('file_type', ['recomendation_letter', 'others']);
+            $table->longText('file_location');
+            $table->integer('uploaded_by')->unsigned();
             $table->timestamps();
         });
     }
