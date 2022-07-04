@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Students;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -13,7 +15,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return "students";
+        $Students = Students::all();
+        return $Students;
     }
 
     /**
@@ -34,7 +37,30 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Student = new Students();
+        $Student->last_name = $request->last_name;
+        $Student->first_name = $request->first_name;
+        $Student->middle_name = $request->middle_name;
+        $Student->student_id = $request->student_id;
+        $Student->gender = $request->gender;
+        $Student->birth_day = $request->birth_day;
+        $Student->address = $request->address;
+        $Student->picture = $request->picture;
+        $Student->civil_status = $request->civil_status;
+        $Student->religion = $request->religion;
+        $Student->contact_number = $request->contact_number;
+        $Student->email_address = $request->email_address;
+        $Student->guardian_name = $request->guardian_name;
+        $Student->relationship = $request->relationship;
+        $Student->guardian_contact_number = $request->guardian_contact_number;
+        $Student->remarks = $request->remarks;
+        $Student->added_by = $request->added_by;
+        $Student->created_at = Carbon::now();
+        $Student->updated_at = Carbon::now();
+        if($Student->save())
+        {
+            return "Student successfully Added";
+        }
     }
 
     /**

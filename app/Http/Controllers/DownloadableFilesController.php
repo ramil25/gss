@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DownloadableFiles;
 use Illuminate\Http\Request;
 
 class DownloadableFilesController extends Controller
@@ -13,7 +14,8 @@ class DownloadableFilesController extends Controller
      */
     public function index()
     {
-        return "downloadable files";
+        $DownloadableFiles = DownloadableFiles::all();
+        return $DownloadableFiles;
     }
 
     /**
