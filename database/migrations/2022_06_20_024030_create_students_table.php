@@ -26,7 +26,7 @@ class CreateStudentsTable extends Migration
             $table->string('civil_status', 20);
             $table->string('religion', 20);
             $table->string('contact_number', 20)->nullable();
-            $table->string('email_address', 20)->nullable();
+            $table->string('email_address', 200)->nullable();
             $table->string('guardian_name', 100);
             $table->string('relationship', 50);
             $table->string('guardian_contact_number', 20);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TestResults;
 use Illuminate\Http\Request;
 
 class TestResultsController extends Controller
@@ -13,7 +14,8 @@ class TestResultsController extends Controller
      */
     public function index()
     {
-        return "Test results";
+        $TestResults = TestResults::all();
+        return $TestResults;
     }
 
     /**

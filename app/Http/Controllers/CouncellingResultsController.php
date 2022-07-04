@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CounselingResults;
 use Illuminate\Http\Request;
 
 class CouncellingResultsController extends Controller
@@ -13,7 +14,8 @@ class CouncellingResultsController extends Controller
      */
     public function index()
     {
-        return "councelling results";
+       $CouncellingResults = CounselingResults::all();
+       return $CouncellingResults;
     }
 
     /**
