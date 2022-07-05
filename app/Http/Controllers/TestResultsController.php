@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TestResults;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TestResultsController extends Controller
@@ -36,7 +37,17 @@ class TestResultsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $TestResult = new TestResults();
+        $TestResult->student_id = $request->student_id;
+        $TestResult->test_type = $request->test_type;
+        $TestResult->test_result = $request->test_result;
+        $TestResult->encoded_by = $request->encoded_by;
+        $TestResult->created_at = Carbon::now();
+        $TestResult->updated_at = Carbon::now();
+        if($TestResult->save())
+        {
+            return "Test Result Encoded Successfully";
+        }
     }
 
     /**
