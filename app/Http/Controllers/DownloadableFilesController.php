@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DownloadableFiles;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DownloadableFilesController extends Controller
@@ -25,7 +26,7 @@ class DownloadableFilesController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -36,7 +37,17 @@ class DownloadableFilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $DLFiles = new DownloadableFiles();
+        $DLFiles->student_id = $request->student_id;
+        $DLFiles->file_type = $request->file_type;
+        $DLFiles->file_location = $request->file_location;
+        $DLFiles->uploaded_by = $request->uploaded_by;
+        $DLFiles->created_at = Carbon::now();
+        $DLFiles->updated_at = Carbon::now();
+        if($DLFiles->save())
+        {
+            return "Files Successfully Uploaded";
+        }
     }
 
     /**

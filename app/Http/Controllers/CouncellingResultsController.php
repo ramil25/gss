@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CounselingResults;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CouncellingResultsController extends Controller
@@ -36,7 +37,17 @@ class CouncellingResultsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $CouncellingResult = new CounselingResults();
+        $CouncellingResult->student_id = $request->student_id;
+        $CouncellingResult->description = $request->description;
+        $CouncellingResult->remarks = $request->remarks;
+        $CouncellingResult->encoded_by = $request->encoded_by;
+        $CouncellingResult->created_at = Carbon::now();
+        $CouncellingResult->updated_at = Carbon::now();
+        if($CouncellingResult->save())
+        {
+            return "Councelling Result successfully encoded";
+        }
     }
 
     /**
