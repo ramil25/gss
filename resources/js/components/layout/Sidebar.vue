@@ -25,14 +25,14 @@
                     >
                 </li>
                 <li class="nav-item">
-                    <a
+                    <router-link
+                        to="/students"
                         class="nav-link active d-flex align-items-center"
-                        href="#"
                     >
                         <b-icon-file-earmark-person />
                         <span data-feather="file"></span>
                         &nbsp;Students
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav-item">
                     <a
