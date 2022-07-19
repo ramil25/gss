@@ -4,7 +4,7 @@ import Login from "../js/components/Login.vue";
 import Dashboard from "../js/components/Dashboard.vue";
 import Users from "../js/components/Users.vue";
 import Students from "../js/components/Students.vue";
-import Main from "../js/components/students-components/Main.vue";
+import MainContent from "../js/components/students-components/MainContent.vue";
 import DFiles from "../js/components/students-components/DFiles.vue";
 import TestResults from "../js/components/students-components/TestResults.vue";
 import CResults from "../js/components/students-components/CResults.vue";
@@ -38,7 +38,7 @@ const routes = [
             {
                 name: "Default",
                 path: "",
-                component: Main,
+                component: MainContent,
             },
             {
                 name: "DFiles",
