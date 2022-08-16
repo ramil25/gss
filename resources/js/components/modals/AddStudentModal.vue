@@ -176,8 +176,8 @@
                                     Student Photo Preview</label
                                 >
                                 <img
-                                    src=""
-                                    alt="..."
+                                    v-if="imgPreview"
+                                    :src="imgPreview"
                                     class="img-thumbnail student-pic"
                                 />
                             </div>
@@ -248,11 +248,26 @@
                     >
                         Close
                     </button>
-                    <button class="btn btn-info">Upload Photo</button>
+                    <!--<button class="btn btn-info">Upload Photo</button>-->
+                    <form @submit.prevent="upload" id="uploadForm">
+                        <input
+                            type="file"
+                            id="image_file"
+                            @change="onFileChange"
+                            ref="doc"
+                        />
+                    </form>
+                    <label
+                        for="image_file"
+                        class="btn btn-info"
+                        style="margin: auto 8px auto 0"
+                        >Upload Photo</label
+                    >
                     <button
                         @click="addStudent"
-                        type="button"
+                        type="submit"
                         class="btn btn-primary"
+                        form="uploadForm"
                     >
                         Save
                     </button>
@@ -270,6 +285,8 @@ import { ref } from "vue";
 export default {
     data() {
         return {
+            imgFile: null,
+            imgPreview: null,
             date: null,
             student: {
                 first_name: "",
@@ -283,7 +300,7 @@ export default {
                 religion: "",
                 contact_num: "",
                 email: "",
-                pic: "none",
+                pic: "",
                 guardian_name: "",
                 relationship: "",
                 guardian_num: "",
@@ -304,8 +321,32 @@ export default {
                     confirmButtonText: "Ok",
                 });
 
+                //this.upload();
+                this.onReset();
                 $("#studentModal").modal("hide");
             });
+        },
+        onFileChange(e) {
+            const file = e.target.files[0];
+            const fileName = file.name; //file name
+
+            this.imgFile = file; // file to clone in public folder
+            this.imgPreview = URL.createObjectURL(file); // image preview
+            this.student.pic = fileName; // data pass to db
+        },
+        upload() {
+            let fd = new FormData();
+            fd.append("img", this.imgFile);
+
+            axios
+                .post("http://127.0.0.1:8000/api/upload", fd)
+                .then((res) => {
+                    console.log("Response", res.data);
+                })
+                .catch((err) => console.log(err));
+        },
+        onReset() {
+            Object.assign(this.$data, this.$options.data());
         },
     },
     setup() {
@@ -338,5 +379,9 @@ export default {
     position: absolute;
     left: 16px;
     top: 32px;
+}
+
+#image_file {
+    display: none;
 }
 </style>

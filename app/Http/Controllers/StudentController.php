@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Students;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class StudentController extends Controller
 {
@@ -87,6 +88,12 @@ class StudentController extends Controller
         //
     }
 
+    // Function for getting specific student
+    public function getStudent($id) {
+        $student = Students::findOrFail($id);
+        return response()->json($student);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -96,7 +103,30 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(['first_name' =>  ['required']]);
+        
+        $Student = Students::findOrFail($id);
+        $Student->last_name = $request->last_name;
+        $Student->first_name = $request->first_name;
+        $Student->middle_name = $request->middle_name;
+        $Student->student_id = $request->student_id;
+        $Student->gender = $request->gender;
+        $date = strtotime($request->birth_day);
+        $newformat = date('Y-m-d',$date);
+        $Student->birth_day = $newformat;
+        $Student->address = $request->address;
+        $Student->picture = $request->picture;
+        $Student->civil_status = $request->civil_status;
+        $Student->religion = $request->religion;
+        $Student->contact_number = $request->contact_number;
+        $Student->email_address = $request->email_address;
+        $Student->guardian_name = $request->guardian_name;
+        $Student->relationship = $request->relationship;
+        $Student->guardian_contact_number = $request->guardian_contact_number;
+        $Student->remarks = $request->remarks;
+        $Student->updated_at = Carbon::now();
+
+        $Student->save();
     }
 
     /**
@@ -107,6 +137,15 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Students::findOrFail($id);
+        $student->delete();
+        
+        return response()->json(['message' => "Record deleted."]);
+    }
+
+    // function for searching
+    public function search(Request $request) {
+        $data = Students::where(Students::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name)"), 'LIKE', '%'.$request->keyword.'%')->get();
+        return response()->json($data);
     }
 }
