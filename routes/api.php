@@ -27,3 +27,10 @@ Route::resource('/students',StudentController::class);
 Route::resource('/councelling_results',CouncellingResultsController::class);
 Route::resource('/downloadable_files',DownloadableFilesController::class);
 Route::resource('/test_results',TestResultsController::class);
+
+Route::post("upload", "App\Http\Controllers\FileController@upload");
+Route::post('/update/{id}', "App\Http\Controllers\StudentController@update");
+Route::get('/livesearch', "App\Http\Controllers\StudentController@search");
+Route::get('/getStudent/{id}', "App\Http\Controllers\StudentController@getStudent");
+Route::delete('/delete/{id}', "App\Http\Controllers\StudentController@destroy");
+
