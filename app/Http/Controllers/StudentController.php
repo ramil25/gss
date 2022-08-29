@@ -16,7 +16,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $Students = Students::all();
+        $Students = Students::all()->sortBy('student_id')->values();
         return $Students;
     }
 
@@ -147,5 +147,12 @@ class StudentController extends Controller
     public function search(Request $request) {
         $data = Students::where(Students::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name)"), 'LIKE', '%'.$request->keyword.'%')->get();
         return response()->json($data);
+    }
+
+    // checks if student is existing
+    public function getValidation($id) {
+        $check = Students::where('student_id', $id)->exists();
+
+        return response()->json($check);
     }
 }

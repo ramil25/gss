@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TestResults;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SebastianBergmann\CodeCoverage\Report\Xml\Tests;
 
 class TestResultsController extends Controller
 {
@@ -15,9 +16,10 @@ class TestResultsController extends Controller
      */
     public function index()
     {
-        $TestResults = TestResults::all();
-        return $TestResults;
+        $TestResults = TestResults::with('students')->orderBy('student_id')->get();
+        return $TestResults;       
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -81,7 +83,12 @@ class TestResultsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $TestResult = TestResults::findOrFail($id);
+        $TestResult->student_id = $request->student_id;
+        $TestResult->test_type = $request->test_type;
+        $TestResult->test_result = $request->test_result;
+        $TestResult->updated_at = Carbon::now();
+        $TestResult->save();
     }
 
     /**
@@ -92,6 +99,23 @@ class TestResultsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $TestResult = TestResults::findOrFail($id);
+        $TestResult->delete();
+        
+        return response()->json(['message' => "Record deleted."]);
+    }
+
+    // getting specific test result
+    public function getTestResult($id) {
+        $TestResult = TestResults::findOrFail($id);
+        return response()->json($TestResult);
+    }
+
+    // function for searching
+    public function search(Request $request) {
+        $data = TestResults::with('students')->whereHas('students', function($query) use($request) {
+            $query->where(TestResults::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name)"), 'LIKE', '%'.$request->keyword.'%');
+        })->get();
+        return response()->json($data);
     }
 }
