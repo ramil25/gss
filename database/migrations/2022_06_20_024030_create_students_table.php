@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('last_name', 50);
             $table->string('first_name', 50);
             $table->string('middle_name', 50);
-            $table->string('student_id', 20);
+            $table->bigInteger('student_id');
             $table->string('gender', 10);
             $table->date('birth_day');
             $table->longText('address');
