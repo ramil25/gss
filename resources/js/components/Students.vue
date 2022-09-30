@@ -68,7 +68,7 @@ import Sidebar from "../components/layout/Sidebar.vue";
 export default {
     data() {
         return {
-            studentView: true,
+            studentView: false,
             filesView: false,
             testResultView: false,
             counselResultView: false,
@@ -98,8 +98,22 @@ export default {
                 this.counselResultView = true;
             }
         },
+        currentTab() {
+            if (this.$route.name == "Default") {
+                this.studentView = true;
+            } else if (this.$route.name == "DFiles") {
+                this.filesView = true;
+            } else if (this.$route.name == "TestResults") {
+                this.testResultView = true;
+            } else if (this.$route.name == "CounselingResults") {
+                this.counselResultView = true;
+            }
+        },
     },
     components: { Sidebar },
+    mounted() {
+        this.currentTab();
+    },
 };
 </script>
 
