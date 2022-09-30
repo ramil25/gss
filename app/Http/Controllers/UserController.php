@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -78,6 +79,12 @@ class UserController extends Controller
         //
     }
 
+    // getting specific user
+    public function getUser($id) {
+        $User = User::findOrFail($id);
+        return response()->json($User);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -96,9 +103,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $length = 12)
     {
-        //
+        $User = User::findOrFail($id);
+        $User->last_name = $request->last_name;
+        $User->first_name = $request->first_name;
+        $User->middle_name = $request->middle_name;
+        $User->email = $request->email;
+        $User->user_level = $request->user_level;
+        $fullName = $request->last_name . " " . $request->first_name . " " . $request->middle_name;
+        $characters = sha1(md5($fullName . "123456"));
+        $characterLength = strlen($characters);
+        $randomStr = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomStr = $characters[rand(0, $characterLength - 1)];
+        }
+        $salt = md5($randomStr);
+        if($User->password == "d41d8cd98f00b204e9800998ecf8427e") // if password is not empty (but vice-versa logic)
+        {
+            $User->password = md5($request->password);
+        }
+        $User->salt = $salt;
+        $User->updated_at = Carbon::now();
+        $User->save();
     }
 
     /**
@@ -109,6 +136,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $User = User::findOrFail($id);
+        $User->delete();
     }
 }

@@ -117,12 +117,12 @@ export default {
                     .then(async (response) => {
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Student Successfully Deleted",
+                            text: "Test Successfully Deleted",
                             icon: "info",
                             confirmButtonText: "Ok",
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                $("#editStudent").modal("hide");
+                                $("#testModal").modal("hide");
                                 window.location.reload();
                             }
                         });
@@ -172,6 +172,11 @@ th,
 td {
     max-width: auto;
     min-width: 150px;
+}
+
+th:nth-last-of-type(1),
+td:nth-last-of-type(1) {
+    min-width: 100px;
 }
 
 .table-container {
