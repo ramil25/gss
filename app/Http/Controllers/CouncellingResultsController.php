@@ -15,8 +15,8 @@ class CouncellingResultsController extends Controller
      */
     public function index()
     {
-       $CouncellingResults = CounselingResults::all();
-       return $CouncellingResults;
+        $CounselResults = CounselingResults::with('students')->orderBy('student_id')->get();
+        return $CounselResults; 
     }
 
     /**
@@ -81,7 +81,12 @@ class CouncellingResultsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $CouncellingResult = CounselingResults::findOrFail($id);
+        $CouncellingResult->student_id = $request->student_id;
+        $CouncellingResult->description = $request->description;
+        $CouncellingResult->remarks = $request->remarks;
+        $CouncellingResult->updated_at = Carbon::now();
+        $CouncellingResult->save();
     }
 
     /**
@@ -92,6 +97,21 @@ class CouncellingResultsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $CounselResult = CounselingResults::findOrFail($id);
+        $CounselResult->delete();
+    }
+
+    // getting specific counsel result
+    public function getCounselResult($id) {
+        $CounselResult = CounselingResults::findOrFail($id);
+        return response()->json($CounselResult);
+    }
+
+    // function for searching
+    public function search(Request $request) {
+        $data = CounselingResults::with('students')->whereHas('students', function($query) use($request) {
+            $query->where(CounselingResults::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name)"), 'LIKE', '%'.$request->keyword.'%');
+        })->get();
+        return response()->json($data);
     }
 }

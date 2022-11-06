@@ -171,7 +171,7 @@ body {
 th,
 td {
     max-width: auto;
-    min-width: 150px;
+    min-width: 260px;
 }
 
 th:nth-last-of-type(1),
