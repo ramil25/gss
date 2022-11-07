@@ -139,4 +139,26 @@ class UserController extends Controller
         $User = User::findOrFail($id);
         $User->delete();
     }
+
+    // Login
+    public function login($username, $password) 
+    {
+        $user = User::where('user_name', $username)->where('password', md5($password))->first();
+        
+        if($user)
+        {
+            return 200; // correct
+        }
+        else {
+            return 401; // wrong
+        }
+    }
+
+    // Get logged in account info
+    public function getCurrentUser($username)
+    {
+        $user = User::where("user_name", $username)->first();
+
+        return response()->json($user);
+    }
 }

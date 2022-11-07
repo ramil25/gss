@@ -58,7 +58,7 @@
                         <td>{{ student.relationship }}</td>
                         <td>{{ student.guardian_contact_number }}</td>
                         <td>{{ student.remarks }}</td>
-                        <td>{{ student.added_by }}</td>
+                        <td>User ID: {{ student.added_by }}</td>
                         <td>{{ student.created_at }}</td>
                         <td>{{ student.updated_at }}</td>
                         <td class="p-0">
@@ -103,6 +103,7 @@
 import { BIconSearch, BIconPencil } from "bootstrap-icons-vue";
 import AddStudentModal from "../modals/AddStudentModal.vue";
 import EditStudentModal from "../modals/EditStudentModal.vue";
+
 export default {
     data() {
         return {

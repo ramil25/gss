@@ -112,7 +112,7 @@ export default {
                 student_id: "",
                 test_type: "",
                 test_result: "",
-                encoded_by: 0,
+                encoded_by: this.$storage.getStorageSync("user"),
             },
         };
     },
@@ -192,7 +192,8 @@ export default {
             if (this.isEdit == true) {
                 this.getTestResult();
             } else {
-                this.testResult.encoded_by = 0;
+                this.testResult.encoded_by =
+                    this.$storage.getStorageSync("user");
                 this.testResult.student_id = "";
                 this.testResult.test_type = "";
                 this.testResult.test_result = "";

@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-9 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label for="desc" class="form-label"
                                     >Description</label
                                 >
@@ -112,7 +112,7 @@ export default {
                 student_id: "",
                 description: "",
                 remarks: "",
-                encoded_by: 0,
+                encoded_by: this.$storage.getStorageSync("user"),
             },
         };
     },
@@ -194,7 +194,7 @@ export default {
                 this.student_id = "";
                 this.description = "";
                 this.remarks = "";
-                this.encoded_by = 0;
+                this.encoded_by = this.$storage.getStorageSync("user");
             }
         },
     },

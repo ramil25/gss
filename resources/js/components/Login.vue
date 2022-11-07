@@ -23,17 +23,16 @@
                             />
                         </div>
                         <hr />
-                        <form>
+                        <form @submit.prevent="login">
                             <div class="form-group">
-                                <label for="exampleInputEmail1"
-                                    >Email address</label
-                                >
+                                <label for="exampleText">Username</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     class="form-control"
-                                    id="exampleInputEmail1"
-                                    aria-describedby="emailHelp"
-                                    placeholder="Enter email"
+                                    id="exampleText"
+                                    aria-describedby="textHelp"
+                                    placeholder="Enter username"
+                                    v-model="username"
                                 />
                             </div>
                             <div class="form-group">
@@ -72,7 +71,7 @@
                                 >Back to home</router-link
                             >
 
-                            <button type="submit" class="btn">Login</button>
+                            <input type="submit" class="btn" value="Login" />
                         </form>
                     </div>
                 </div>
@@ -87,12 +86,36 @@ export default {
     data() {
         return {
             showPassword: false,
+            username: null,
             password: null,
         };
     },
     methods: {
         togglePassword() {
             this.showPassword = !this.showPassword;
+        },
+        login() {
+            axios
+                .post(
+                    "http://127.0.0.1:8000/api/log/" +
+                        this.username +
+                        "/" +
+                        this.password
+                )
+                .then((response) => {
+                    if (response.data == 200) {
+                        this.$storage.setStorageSync("isLogin", true);
+                        this.$storage.setStorageSync("username", this.username);
+                        this.$router.push({ path: "/dashboard" });
+                    } else {
+                        alert("Wrong username or password");
+                        this.username = "";
+                        this.password = "";
+                    }
+                })
+                .catch((errors) => {
+                    console.log(errors);
+                });
         },
     },
 };

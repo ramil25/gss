@@ -3,7 +3,11 @@
         <div class="sidebar-sticky">
             <div class="row d-flex align-items-center">
                 <b-icon-person-circle class="mb-0 ml-3 h3" />
-                <p class="h4 my-0 ml-2 py-3">Name</p>
+                <div class="name-container">
+                    <p class="h5 my-0 ml-2 py-3 d-block text-truncate">
+                        {{ currentUser }}
+                    </p>
+                </div>
             </div>
             <hr class="m-0 p-0" />
             <ul class="navbar-nav flex-column">
@@ -59,7 +63,41 @@ import {
 
 export default {
     mounted() {
-        console.log("Component mounted.");
+        this.getUser();
+    },
+    data() {
+        return {
+            currentUser: "",
+        };
+    },
+    methods: {
+        getUser() {
+            const username = this.$storage.getStorageSync("username");
+            axios
+                .post("http://127.0.0.1:8000/api/getUser/" + username)
+                .then((response) => {
+                    // check if user has middle name
+                    if (response.data.middle_name == null) {
+                        this.currentUser =
+                            response.data.first_name +
+                            " " +
+                            response.data.last_name;
+                    } else {
+                        this.currentUser =
+                            response.data.first_name +
+                            " " +
+                            response.data.middle_name +
+                            " " +
+                            response.data.last_name;
+                    }
+
+                    const userID = response.data.id;
+                    this.$storage.setStorageSync("user", userID);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+                });
+        },
     },
     components: {
         BIconSpeedometer2,
@@ -78,5 +116,15 @@ export default {
 
 .nav-link:hover {
     color: rgba(0, 0, 0, 0.9);
+}
+
+.name-container {
+    max-width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.name-container > p {
+    font-size: 16px;
 }
 </style>
