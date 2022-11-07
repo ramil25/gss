@@ -32,6 +32,8 @@ Route::post("upload", "App\Http\Controllers\FileController@upload");
 Route::post('/update/{id}', "App\Http\Controllers\StudentController@update");
 Route::post('/testUpdate/{id}', "App\Http\Controllers\TestResultsController@update");
 Route::post('/counselUpdate/{id}', "App\Http\Controllers\CouncellingResultsController@update");
+Route::post('/log/{username}/{password}', "App\Http\Controllers\UserController@login");
+Route::post('/getUser/{username}', "App\Http\Controllers\UserController@getCurrentUser");
 Route::post('/userUpdate/{id}', "App\Http\Controllers\UserController@update");
 Route::get('/livesearch', "App\Http\Controllers\StudentController@search");
 Route::get('/testSearch', "App\Http\Controllers\TestResultsController@search");

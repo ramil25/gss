@@ -33,7 +33,7 @@
                         </td>
                         <td>{{ counsel.description }}</td>
                         <td>{{ counsel.remarks }}</td>
-                        <td>{{ counsel.encoded_by }}</td>
+                        <td>User ID: {{ counsel.encoded_by }}</td>
                         <td>{{ counsel.created_at }}</td>
                         <td>{{ counsel.updated_at }}</td>
                         <td class="p-0 text-center align-middle">

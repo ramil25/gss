@@ -174,7 +174,7 @@ export default {
                 password: "",
                 email: "",
                 user_level: "",
-                created_by: 0,
+                created_by: this.$storage.getStorageSync("user"),
             },
         };
     },
@@ -248,7 +248,7 @@ export default {
                 this.user.password = "";
                 this.user.email = "";
                 this.user.user_level = "";
-                this.user.created_by = 0;
+                this.user.created_by = this.$storage.getStorageSync("user");
             }
         },
     },

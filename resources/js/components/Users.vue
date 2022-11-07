@@ -7,7 +7,9 @@
 
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="#">Sign out</a>
+                    <a class="nav-link" href="" @click.prevent="logout"
+                        >Sign out</a
+                    >
                 </li>
             </ul>
         </nav>
@@ -134,6 +136,16 @@ export default {
                     });
             }
         },
+        logout() {
+            this.$storage.clearStorageSync();
+            this.$router.push({ path: "/" });
+        },
+    },
+    beforeCreate() {
+        const isLogin = this.$storage.getStorageSync("isLogin");
+        if (isLogin == false || isLogin == null) {
+            this.$router.push({ path: "/login" });
+        }
     },
     components: {
         Sidebar,

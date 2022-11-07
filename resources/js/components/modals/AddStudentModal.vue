@@ -305,7 +305,7 @@ export default {
                 relationship: "",
                 guardian_num: "",
                 remarks: "",
-                added_by: 0,
+                added_by: this.$storage.getStorageSync("user"),
             },
         };
     },

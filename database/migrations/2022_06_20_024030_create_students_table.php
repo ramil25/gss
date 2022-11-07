@@ -22,7 +22,7 @@ class CreateStudentsTable extends Migration
             $table->string('gender', 10);
             $table->date('birth_day');
             $table->longText('address');
-            $table->string('picture', 200);
+            $table->string('picture', 200)->nullable();
             $table->string('civil_status', 20);
             $table->string('religion', 20);
             $table->string('contact_number', 20)->nullable();
