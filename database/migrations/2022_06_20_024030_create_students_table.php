@@ -31,7 +31,7 @@ class CreateStudentsTable extends Migration
             $table->string('relationship', 50);
             $table->string('guardian_contact_number', 20);
             $table->longText('remarks')->nullable();
-           $table->integer('added_by')->unsigned();
+           $table->string('added_by', 40);
             $table->timestamps();
         });
     }

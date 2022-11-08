@@ -91,8 +91,7 @@ export default {
                             response.data.last_name;
                     }
 
-                    const userID = response.data.id;
-                    this.$storage.setStorageSync("user", userID);
+                    this.$storage.setStorageSync("user", this.currentUser);
                 })
                 .catch((errors) => {
                     console.log(errors);

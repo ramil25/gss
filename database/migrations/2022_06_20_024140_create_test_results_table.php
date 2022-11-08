@@ -18,7 +18,7 @@ class CreateTestResultsTable extends Migration
             $table->bigInteger('student_id');
             $table->string('test_type', 100);
             $table->double('test_result', 100, 2);
-            $table->integer('encoded_by')->unsigned();
+            $table->string('encoded_by', 40);
             $table->timestamps();
         });
     }
