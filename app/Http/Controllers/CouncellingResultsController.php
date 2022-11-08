@@ -114,4 +114,47 @@ class CouncellingResultsController extends Controller
         })->get();
         return response()->json($data);
     }
+
+    // Count number of counsel
+    public function countCounsel() 
+    {
+        $count = CounselingResults::all()->count();
+
+        if($count > 0) {
+            return $count;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    // Count number of counsel results of female students
+    public function countFemale() 
+    {
+        $count = CounselingResults::with('students')->whereHas('students', function($query) {
+            $query->where('gender', 'Female');
+        })->count();
+
+        if($count > 0) {
+            return $count;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    // Count number of counsel results of male students
+    public function countMale() 
+    {
+        $count = CounselingResults::with('students')->whereHas('students', function($query) {
+            $query->where('gender', 'Male');
+        })->count();
+
+        if($count > 0) {
+            return $count;
+        }
+        else {
+            return 0;
+        }
+    }
 }

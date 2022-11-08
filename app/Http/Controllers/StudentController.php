@@ -155,4 +155,17 @@ class StudentController extends Controller
 
         return response()->json($check);
     }
+
+    // Count number of students
+    public function countStudent() 
+    {
+        $count = Students::all()->count();
+
+        if($count > 0) {
+            return $count;
+        }
+        else {
+            return 0;
+        }
+    }
 }

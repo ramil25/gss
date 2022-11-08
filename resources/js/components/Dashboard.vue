@@ -32,14 +32,16 @@
                                     <p
                                         class="text-container font-weight-bold text-primary ml-2 my-0"
                                     >
-                                        Title
+                                        Users
                                     </p>
                                     <p
                                         class="text-container ml-2 my-0 text-secondary"
                                     >
-                                        Description
+                                        Total users
                                     </p>
-                                    <p class="position-absolute">0</p>
+                                    <p class="position-absolute">
+                                        {{ userCount }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +51,17 @@
                                     <p
                                         class="text-container font-weight-bold text-success ml-2 my-0"
                                     >
-                                        Title
+                                        Students
                                     </p>
                                     <p
                                         class="text-container ml-2 my-0 text-secondary"
                                     >
-                                        Description
+                                        Total students
                                     </p>
 
-                                    <p class="position-absolute">0</p>
+                                    <p class="position-absolute">
+                                        {{ studentCount }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -67,14 +71,16 @@
                                     <p
                                         class="text-container font-weight-bold text-danger ml-2 my-0"
                                     >
-                                        Title
+                                        Test
                                     </p>
                                     <p
                                         class="text-container ml-2 my-0 text-secondary"
                                     >
-                                        Description
+                                        Total results
                                     </p>
-                                    <p class="position-absolute">0</p>
+                                    <p class="position-absolute">
+                                        {{ testCount }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -84,14 +90,16 @@
                                     <p
                                         class="text-container font-weight-bold text-warning ml-2 my-0"
                                     >
-                                        Title
+                                        Counsel
                                     </p>
                                     <p
                                         class="text-container ml-2 my-0 text-secondary"
                                     >
-                                        Description
+                                        Total results
                                     </p>
-                                    <p class="position-absolute">0</p>
+                                    <p class="position-absolute">
+                                        {{ counselCount }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +115,7 @@
                                     <div
                                         class="content-1-header container-fluid d-flex justify-content-between"
                                     >
-                                        <h5 class="m-0">Lorem</h5>
+                                        <h5 class="m-0">My Chart</h5>
                                         <b-icon-pin-angle
                                             class="align-self-center"
                                         />
@@ -117,13 +125,12 @@
                                             <canvas id="myChart"></canvas>
                                         </div>
                                         <p class="mt-3">
-                                            Lorem ipsum dolor sit amet
-                                            consectetur adipisicing elit. Illo
-                                            aliquid officia veniam commodi porro
-                                            odio nihil natus exercitationem
-                                            sapiente repellat laborum ipsum, hic
-                                            quidem cumque quasi delectus facere
-                                            placeat ullam?
+                                            The above chart is the
+                                            representation of numbers of counsel
+                                            results by gender. Pink-ish color
+                                            represents the data of every female
+                                            students. Blue-ish color represents
+                                            the data of every male students.
                                         </p>
                                     </div>
                                 </div>
@@ -134,17 +141,11 @@
                                         <p
                                             class="py-2 m-0 font-weight-bold text-dark"
                                         >
-                                            Lorem
+                                            Documents
                                         </p>
                                         <p class="py-0 my-0 text-justify">
-                                            Lorem ipsum dolor, sit amet
-                                            consectetur adipisicing elit. Nemo
-                                            autem unde dolorum quidem mollitia
-                                            culpa? Officiis neque error
-                                            quibusdam praesentium nam
-                                            necessitatibus eos commodi
-                                            assumenda. Qui amet impedit hic
-                                            cumque.
+                                            For now, there is no available
+                                            document.
                                         </p>
                                     </div>
                                 </div>
@@ -155,17 +156,11 @@
                                         <p
                                             class="py-2 m-0 font-weight-bold text-dark"
                                         >
-                                            Lorem
+                                            Downloadable Files
                                         </p>
                                         <p class="py-0 my-0 text-justify">
-                                            Lorem ipsum dolor, sit amet
-                                            consectetur adipisicing elit. Nemo
-                                            autem unde dolorum quidem mollitia
-                                            culpa? Officiis neque error
-                                            quibusdam praesentium nam
-                                            necessitatibus eos commodi
-                                            assumenda. Qui amet impedit hic
-                                            cumque.
+                                            For now, there is no available
+                                            downloadable file.
                                         </p>
                                     </div>
                                 </div>
@@ -186,21 +181,23 @@ import Chart from "chart.js/auto";
 export default {
     name: "Dashboard",
     mounted() {
-        console.log("Component mounted.");
+        this.countUser();
+        this.countStudent();
+        this.countTest();
+        this.countCounsel();
+        this.countCounselFemale();
+        this.countCounselMale();
+        console.log(this.maleCounsel);
 
         const ctx = document.getElementById("myChart");
 
         const data = {
-            labels: ["Red", "Blue", "Yellow"],
+            labels: ["Counsel Results (Female)", "Counsel Results (Male)"],
             datasets: [
                 {
                     label: "My First Dataset",
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        "rgb(255, 99, 132)",
-                        "rgb(54, 162, 235)",
-                        "rgb(255, 205, 86)",
-                    ],
+                    data: [this.femaleCounsel, this.maleCounsel],
+                    backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
                     hoverOffset: 4,
                 },
             ],
@@ -211,7 +208,16 @@ export default {
             data: data,
         });
     },
-    data: () => ({}),
+    data() {
+        return {
+            userCount: 0,
+            studentCount: 0,
+            testCount: 0,
+            counselCount: 0,
+            maleCounsel: this.$storage.getStorageSync("maleCounsel"),
+            femaleCounsel: this.$storage.getStorageSync("femaleCounsel"),
+        };
+    },
     beforeCreate() {
         const isLogin = this.$storage.getStorageSync("isLogin");
         if (isLogin == false || isLogin == null) {
@@ -222,6 +228,52 @@ export default {
         logout() {
             this.$storage.clearStorageSync();
             this.$router.push({ path: "/" });
+        },
+        countUser() {
+            let url = "http://127.0.0.1:8000/api/countUser";
+            axios
+                .post(url)
+                .then((response) => (this.userCount = response.data));
+        },
+        countStudent() {
+            let url = "http://127.0.0.1:8000/api/countStudent";
+            axios
+                .post(url)
+                .then((response) => (this.studentCount = response.data));
+        },
+        countTest() {
+            let url = "http://127.0.0.1:8000/api/countTest";
+            axios
+                .post(url)
+                .then((response) => (this.testCount = response.data));
+        },
+        countCounsel() {
+            let url = "http://127.0.0.1:8000/api/countCounsel";
+            axios
+                .post(url)
+                .then((response) => (this.counselCount = response.data));
+        },
+        countCounselFemale() {
+            let url = "http://127.0.0.1:8000/api/counselFemale";
+            axios
+                .post(url)
+                .then((response) =>
+                    this.$storage.setStorageSync("femaleCounsel", response.data)
+                )
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        countCounselMale() {
+            let url = "http://127.0.0.1:8000/api/counselMale";
+            axios
+                .post(url)
+                .then((response) =>
+                    this.$storage.setStorageSync("maleCounsel", response.data)
+                )
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
     components: {

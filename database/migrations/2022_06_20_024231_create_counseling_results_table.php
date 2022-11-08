@@ -18,7 +18,7 @@ class CreateCounselingResultsTable extends Migration
             $table->bigInteger('student_id');
             $table->text('description')->nullable();
             $table->longText('remarks')->nullable();
-            $table->integer('encoded_by')->unsigned();
+            $table->string('encoded_by', 40);
             $table->timestamps();
         });
     }

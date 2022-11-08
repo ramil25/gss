@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('salt', 200)->nullable();
             $table->string('email', 100)->nullable();
             $table->boolean('user_level');
-            $table->integer('created_by')->unsigned();
+            $table->string('created_by', 40);
             $table->timestamps();
         });
 
@@ -36,7 +36,7 @@ class CreateUsersTable extends Migration
                 'user_name' => 'gssadmin',
                 'password' => md5('admin1234'),
                 'user_level' => 1,
-                'created_by' => 0
+                'created_by' => 'default'
             )
         );
     }

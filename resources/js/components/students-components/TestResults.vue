@@ -33,7 +33,7 @@
                         </td>
                         <td>{{ test.test_type }}</td>
                         <td>{{ test.test_result }}</td>
-                        <td>User ID: {{ test.encoded_by }}</td>
+                        <td>{{ test.encoded_by }}</td>
                         <td>{{ test.created_at }}</td>
                         <td>{{ test.updated_at }}</td>
                         <td class="p-0 text-center align-middle">

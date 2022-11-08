@@ -118,4 +118,17 @@ class TestResultsController extends Controller
         })->get();
         return response()->json($data);
     }
+
+    // Count number of users
+    public function countTest() 
+    {
+        $count = TestResults::all()->count();
+
+        if($count > 0) {
+            return $count;
+        }
+        else {
+            return 0;
+        }
+    }
 }

@@ -35,6 +35,12 @@ Route::post('/counselUpdate/{id}', "App\Http\Controllers\CouncellingResultsContr
 Route::post('/log/{username}/{password}', "App\Http\Controllers\UserController@login");
 Route::post('/getUser/{username}', "App\Http\Controllers\UserController@getCurrentUser");
 Route::post('/userUpdate/{id}', "App\Http\Controllers\UserController@update");
+Route::post('/countUser', "App\Http\Controllers\UserController@countUser");
+Route::post('/countStudent', "App\Http\Controllers\StudentController@countStudent");
+Route::post('/countTest', "App\Http\Controllers\TestResultsController@countTest");
+Route::post('/countCounsel', "App\Http\Controllers\CouncellingResultsController@countCounsel");
+Route::post('/counselFemale', "App\Http\Controllers\CouncellingResultsController@countFemale");
+Route::post('/counselMale', "App\Http\Controllers\CouncellingResultsController@countMale");
 Route::get('/livesearch', "App\Http\Controllers\StudentController@search");
 Route::get('/testSearch', "App\Http\Controllers\TestResultsController@search");
 Route::get('/counselSearch', "App\Http\Controllers\CouncellingResultsController@search");
